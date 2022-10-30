@@ -1,7 +1,7 @@
 # kuralabs_deployment_4
 Optimizing application infrastructure deployment 4
 
-Deployment 4 Documentation
+Deployment 4 Documentation found here: https://github.com/Chaneshm/kuralabs_deployment_4/blob/main/Dep4Documentation.pdf
 
 Welcome to Kura Labs’ deployment 4 documentation. In this deployment we are utilizing terraform in order to provision a vpc as well as deploying a web server to one of the subnets through the use of an ec2 instance.
 
