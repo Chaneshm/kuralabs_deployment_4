@@ -1,28 +1,18 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
+module "createVpc" {
+    source    = "./modules/vpc"
+    vpc-cidr  = var.vpc-cidr
+    sub1-cidr = var.sub1-cidr
+    sub2-cidr = var.sub2-cidr
 
-provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region = "us-east-1"
-  
 }
 
-resource "aws_instance" "web_server01" {
-  ami = "ami-08c40ec9ead489470"
-  instance_type = "t2.micro"
-  key_name = "Cali"
-  vpc_security_group_ids = [aws_security_group.web_ssh.id]
-
-  user_data = "${file("deploy.sh")}"
-
-  tags = {
-    "Name" : "Webserver001"
-  }
-  
-}
-
-output "instance_ip" {
-  value = aws_instance.web_server01.public_ip
-  
+module "createEC2" {
+    source          = "./modules/ec2"
+    vpc_id          = module.createVpc.vpc_id
+    subnet1_id      = module.createVpc.subnet1_id
+    subnet2_id      = module.createVpc.subnet2_id
+    ec2-properties  = var.ec2-properties
+    depends_on      = [
+      module.createVpc
+    ]
 }
